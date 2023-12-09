@@ -1,0 +1,61 @@
+﻿@page "/development"
+@using ThirdCoastSoftware.Models
+@using ThirdCoastSoftware.Shared.Components
+
+<div class="development">
+	<p class="h1 mx-auto">Development</p>
+
+	<div class="d-flex tabs mt-5">
+		@foreach(var service in _services)
+		{
+			<div class="d-flex col text-center cursor-pointer mx-5 justify-content-around @((service.Active) ? "active-tab" : "")" @onclick="@(() => selectService(service))">
+				<h4 class="">@service.Title</h4>
+
+				<div class="icons">
+					@foreach(var icon in service.Icons)
+					{
+						<i class="bi @icon my-auto mx-3"></i>
+					}
+				</div>
+			</div>
+		}
+	</div>
+	<div class="display">
+
+	</div>
+</div>
+
+@code {
+	private List<Tab> _services;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_services = new List<Tab>
+		{
+			new Tab
+			{
+				Title = "Web",
+				Icons = new string[3]{ "bi-browser-chrome", "bi-browser-edge", "bi-browser-safari" },
+				Active = true
+			},
+			new Tab
+			{
+				Title = "Mobile",
+				Icons = new string[2]{ "bi-android2", "bi-apple" }
+			},
+			new Tab
+			{
+				Title = "Desktop",
+				Icons = new string[1]{ "bi-pc-display" }
+			}
+		};
+	}
+
+	private void selectService(Tab service)
+	{
+		service.Active = true;
+
+		foreach (var svc in _services.Where(s => s.Title != service.Title))
+			svc.Active = false;
+	}
+}

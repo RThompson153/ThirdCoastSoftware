@@ -1,0 +1,17 @@
+.nav-bar {
+    height: 3.5rem;
+    border-bottom: 1px solid #dfdad5;
+}
+
+.nav-bar ul{
+    list-style: none;
+}
+
+.nav-bar-link{
+    margin: auto 0;
+    cursor: pointer;
+}
+
+.nav-bar-link:first-of-type{
+    margin-right: auto;
+}

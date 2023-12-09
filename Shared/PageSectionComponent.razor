@@ -1,0 +1,14 @@
+﻿@using ThirdCoastSoftware.Models
+
+<div class="page-section d-flex">
+	<div class="page-section-content col">
+		<h3>@Section.Title</h3>
+
+		<p class="col-8">@Section.Description</p>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public PageSection Section { get; set; }
+}

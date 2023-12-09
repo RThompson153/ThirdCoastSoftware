@@ -1,0 +1,42 @@
+﻿@page "/"
+@using ThirdCoastSoftware.Models
+
+<div class="index">
+	<div class="page-section d-flex">
+		<p class="h1 mx-auto">Excellence through dedication and professionalism.</p>
+	</div>
+
+	<div class="page-section d-flex">
+		<div class="col section">
+			<p class="h1">About Us</p>
+		
+			<p>Our developers have experience in a variety of different industries, spanning from healthcare and government to manufaturing and education. We've worked with startups, large enterprise companies, and small businesses.</p>
+		</div>
+	
+		<div class="col section my-auto d-flex">
+			<div class="professionalism mx-auto cursor-pointer">Services &amp; Solutions</div>
+			<div class="excelence mx-auto cursor-pointer">Our Work</div>
+			<div class="dedication mx-auto cursor-pointer">Contact Us</div>
+		</div>
+	</div>
+</div>
+
+@code{
+	private IEnumerable<PageSection> _pageSections;
+
+	protected override void OnInitialized()
+	{
+		_pageSections = new List<PageSection>
+		{
+			new PageSection
+			{
+				Title = "Software Development for everyone",
+				Description = "Utilizing the most recent technologies in software development to provide the most stable product for your needs."
+			},
+			new PageSection
+			{
+				Title = "Products & Solutions"
+			}
+		};
+	}
+}

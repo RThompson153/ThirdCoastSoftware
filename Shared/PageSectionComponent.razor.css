@@ -1,0 +1,19 @@
+﻿.page-section {
+	height: calc(45vh);
+}
+
+.page-section:first-of-type{
+	margin-top: 10rem;
+}
+
+.page-section-content{
+	margin: 0 20rem;
+}
+
+h3{
+	font-size: 4rem;
+}
+
+p{
+	font-size: 1.5rem;
+}

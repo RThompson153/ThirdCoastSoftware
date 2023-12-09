@@ -1,0 +1,7 @@
+﻿.send:hover {
+	color: var(--prof-color);
+}
+
+.modal-header, .modal-footer{
+	border: none !important;
+}

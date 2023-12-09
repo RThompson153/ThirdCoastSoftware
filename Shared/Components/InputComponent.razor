@@ -1,0 +1,82 @@
+﻿@using System.Text.RegularExpressions
+@using System.Diagnostics
+@using System.Net.Mail
+@using ThirdCoastSoftware.Shared.Components
+@using ThirdCoastSoftware.Models
+@using ThirdCoastSoftware.Constants
+
+<div class="tcs-input-component">
+	<LabelComponent Model="@Model" BackgroundColor="@BackgroundColor" />
+
+	@switch(Model.InputType)
+	{
+		case InputType.Text:
+		case InputType.Number:
+		case InputType.Phone:
+		case InputType.Email:
+			<div class="tcs-input">
+				<input type="text" class="@BackgroundColor @((_showError) ? "border-danger" : "")" value="@Model.Value" maxlength="@Model.MaxLength" @oninput="onInput" />
+			</div>
+			break;
+		case InputType.TextArea:
+			<div class="tcs-input">
+				<textarea class="@BackgroundColor tcs-textarea-input" rows="5" value="@Model.Value" maxlength="@Model.MaxLength" @oninput="onInput"></textarea>
+			</div>
+			break;
+	}
+</div>
+
+@code{
+	[Parameter]
+	public Models.Input Model { get; set; }
+	[Parameter]
+	public string BackgroundColor { get; set; }
+	[Parameter]
+	public bool HideSpinner { get; set; }
+
+	private bool _showError;
+	private Regex _numberPattern = new Regex("^[0-9]+$");
+
+	private void onInput(ChangeEventArgs val)
+	{
+		var value = val.Value.ToString();
+
+		Model.Value = Model.InputType switch
+		{
+			InputType.Number => validateNumber(value),
+			InputType.Phone => validatePhone(value),
+			InputType.Email => validateEmail(value),
+			_ => value
+		};
+	}
+
+	private string validateNumber(string value)
+	{
+		_showError = !_numberPattern.IsMatch(value);
+
+		return value;
+	}
+
+	private string validatePhone(string value)
+	{
+		value = value.Replace("(", "").Replace(")", "").Replace(" ", "").Replace("-", "");
+
+		_showError = !_numberPattern.IsMatch(value);
+
+		return Regex.Replace(value, @"(\d{3})(\d{3})(\d{4})", "($1) $2-$3");
+	}
+
+	private string validateEmail(string value)
+	{
+		try
+		{
+			var email = new MailAddress(value);
+
+			return email.Address;
+		}
+		catch
+		{
+			return value;
+		}
+	}
+}

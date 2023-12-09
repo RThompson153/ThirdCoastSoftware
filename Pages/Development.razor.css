@@ -1,0 +1,7 @@
+﻿.tabs {
+	border-bottom: 1px solid var(--excel-color);
+}
+.active-tab {
+	border-bottom: 2px solid var(--excel-color);
+	color: var(--prof-color);
+}

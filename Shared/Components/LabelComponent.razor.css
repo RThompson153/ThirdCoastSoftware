@@ -1,0 +1,28 @@
+﻿.tcs-label-component {
+	font-size: 0.8rem;
+}
+
+.tcs-label-inline {
+	justify-content: left;
+}
+
+.tcs-label-left {
+	margin-right: 1rem;
+	white-space: nowrap;
+}
+
+.tcs-label-inline {
+	position: absolute;
+	height: 0.1rem;
+	padding: 0 0.25rem;
+	display: flex;
+	z-index: 1000;
+}
+
+.tcs-inline-label {
+	transform: translateY(-0.6rem);
+}
+
+.required {
+	margin-right: 0.25rem;
+}

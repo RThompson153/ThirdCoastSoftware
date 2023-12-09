@@ -1,0 +1,28 @@
+﻿<div class="tcs-label-component tcs-label-@_inlineLabel my-auto">
+    <div class="tcs-label-@_inlineLabel @BackgroundColor">
+        <label class="@((Model.InlineLabel) ? "tcs-inline-label" : "") d-flex">
+            @if (Model.Required)
+            {
+                <span class="required h4 text-danger">*</span>
+            }
+            <span>@Model.Name</span>
+        </label>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public ThirdCoastSoftware.Models.Input Model { get; set; }
+    [Parameter]
+    public string BackgroundColor { get; set; }
+
+    private string _inlineLabel;
+
+    protected override void OnInitialized()
+    {
+        _inlineLabel = (Model.InlineLabel)
+            ? "inline"
+            : "left";
+    }
+}

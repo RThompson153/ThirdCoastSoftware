@@ -1,0 +1,63 @@
+﻿@if(_open)
+{
+	<div class="modal @MaskColor" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content @BackgroundColor">
+                @if(Content != null)
+                {
+                    @Content
+                }
+                else
+                {
+                    <div class="modal-header">
+                        @if(HeaderContent != null)
+		                {
+			                @HeaderContent
+		                }
+
+                        <i class="bi bi-x-lg cursor-pointer" @onclick="Close"></i>
+                    </div>
+                    <div class="modal-body">
+                        @if(BodyContent != null)
+		                {
+			                @BodyContent
+		                }
+                    </div>
+                    <div class="modal-footer">
+                        @if(FooterContent != null)
+		                {
+			                @FooterContent
+		                }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment Content { get; set; }
+    [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+    [Parameter]
+    public RenderFragment BodyContent { get; set; }
+    [Parameter]
+    public RenderFragment FooterContent { get; set; }
+
+    [Parameter]
+    public string BackgroundColor { get; set; }
+    [Parameter]
+    public string MaskColor { get; set; }
+
+	private bool _open;
+
+    public void Open()
+    {
+        _open = true;
+
+        StateHasChanged();
+    }
+
+    public void Close() => _open = false;
+}

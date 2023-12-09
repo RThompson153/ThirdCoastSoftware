@@ -1,0 +1,18 @@
+﻿@using ThirdCoastSoftware.Services
+@inherits LayoutComponentBase
+@inject StateContainer StateContainer
+
+<PageTitle>ThirdCoastSoftware</PageTitle>
+
+<CascadingValue Value="StateContainer">
+    <div class="page bg-dark row m-0" @onclick="@(() => StateContainer.CloseDropdowns())">
+        <NavMenu />
+
+        <div class="content">
+            @Body
+        </div>
+    </div>
+</CascadingValue>
+
+@code{
+}

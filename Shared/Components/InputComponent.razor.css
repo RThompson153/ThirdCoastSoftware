@@ -1,0 +1,25 @@
+﻿.tcs-input-component, .tcs-input {
+	display: flex;
+}
+
+.tcs-input-component, .tcs-input, .tcs-input input, .tcs-input textarea{
+	width: 100%;
+}
+
+.tcs-input input, .tcs-input textarea {
+	border: 1px solid var(--excel-color);
+	border-radius: 0.25rem;
+	color: var(--excel-color);
+}
+
+.tcs-input input {
+	height: 2.25rem;
+}
+
+.tcs-input input:focus, .tcs-input textarea:focus {
+	outline: none;
+}
+
+.error {
+	border-color: red;
+}

@@ -1,0 +1,74 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+:root {
+    --prof-color: rgb(59, 134, 173);
+    --ded-color: rgb(22, 180, 148);
+    --excel-color: rgb(223, 218, 213);
+    --prof-color-half: rgba(59, 134, 173, 0.5);
+    --ded-color-half: rgba(22, 180, 148, 0.5);
+    --excel-color-half: rgba(223, 218, 213, 0.5);
+}
+
+html, body {
+    font-family: 'NoeDisplay', 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    color: #dfdad5;
+}
+
+.content {
+    height: calc(100vh - 3.5rem);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.dropdown p.nested {
+    margin-left: 2rem;
+}
+
+.page-section {
+    margin: 5rem 0;
+}
+
+.page-section h1{
+    width: 100%;
+}
+
+.section{
+    margin: 0 3rem;
+    padding: 0 1rem;
+    font-size: 1.5rem;
+}
+
+.index, .development{
+    margin: 5rem 10rem;
+}
+
+.professionalism {
+    color: var(--prof-color);
+}
+
+.excelence {
+    color: var(--excel-color);
+}
+
+.dedication {
+    color: var(--ded-color);
+}
+
+.professionalism-bg {
+    background-color: var(--prof-color-half);
+}
+
+.excelence-bg {
+    background-color: var(--excel-color-half);
+}
+
+.dedication-bg {
+    background-color: var(--ded-color-half);
+}
+
+h1{
+    border: none !important;
+}

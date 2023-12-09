@@ -1,0 +1,74 @@
+﻿@using ThirdCoastSoftware.Services
+@using ThirdCoastSoftware.Shared.Components
+
+<div class="nav-bar" id="nav-bar">
+	<ul class="my-auto d-flex">
+		<li class="nav-bar-link" @onclick="@(() => navigateTo("/"))"><LogoComponent /></li>
+		<li class="nav-bar-link mx-5" @onclick="@(() => expand(_products))" @onclick:stopPropagation>
+			Services &amp; Solutions
+
+			<DropdownComponent @ref="@_products">
+				<Content>
+					<h4 class="nav-item-head px-3">Services</h4>
+						<p class="nested px-3" @onclick="@(() => navigateTo("development"))">Development</p>
+						<p class="nested px-3" @onclick="@(() => navigateTo("integrations"))">Integrations</p>
+					<h4 class="nav-item-head px-3">Solutions</h4>
+						@*<p class="nested" @onclick="@(() => navigateTo("erp"))">Erp</p>*@
+						<p class="nested px-3" @onclick="@(() => navigateTo("digital-tools"))">Digital Tools</p>
+				</Content>
+			</DropdownComponent>
+		</li>
+		<li class="nav-bar-link mx-5" @onclick="@(() => _contact.Open())" @onclick:stopPropagation>
+			Contact Us
+		</li>
+		<li class="nav-bar-link mx-5" @onclick="@(() => expand(_portal))" @onclick:stopPropagation>
+			Customer Portal
+
+			<DropdownComponent Position="right" @ref="@_portal">
+				<Content>
+					<p class="">Login</p>
+					<p>Create Account</p>
+					<p>Help</p>
+				</Content>
+			</DropdownComponent>
+		</li>
+	</ul>
+</div>
+
+<ModalComponent BackgroundColor="bg-dark" MaskColor="light-mask" @ref="@_contact">
+	<Content>
+		<ContactComponent CloseCallback="@_contact.Close" />
+	</Content>
+</ModalComponent>
+
+@code{
+	[CascadingParameter]
+	protected StateContainer StateContainer { get; set; }
+
+	private DropdownComponent _products, _portal;
+	private ModalComponent _contact;
+	private string _border;
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		var dropdowns = StateContainer.Dropdowns?.ToList() ?? new List<DropdownComponent>();
+
+		if (!dropdowns.Contains(_products))
+			dropdowns.Add(_products);
+		if (!dropdowns.Contains(_portal))
+			dropdowns.Add(_portal);
+
+		StateContainer.Dropdowns = dropdowns;
+	}
+
+	private void expand(DropdownComponent elm)
+	{
+		elm.Toggle();
+
+		StateContainer.CloseDropdowns(elm);
+	}
+
+	private void navigateTo(string page) => StateContainer.Navigate(page);
+
+	private void scrollTo(string element) => StateContainer.ScrollTo(element);
+}

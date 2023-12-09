@@ -1,0 +1,135 @@
+﻿@using MailKit.Net.Smtp;
+@using MimeKit
+@using ThirdCoastSoftware.Shared.Components
+@using ThirdCoastSoftware.Models
+@using ThirdCoastSoftware.Constants
+
+<div class="contact-us" id="contact-us" @onclick:stopPropagation>
+	<div class="modal-header">
+		<h1 class="text-center">Let us work with you.</h1>
+
+		<i class="bi bi-x-lg cursor-pointer" @onclick="@(() => CloseCallback.InvokeAsync())"></i>
+	</div>
+	
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-7">
+				<InputComponent Model="@_inputComponents.FirstOrDefault(ic => ic.Name == Constants.Name)" BackgroundColor="bg-dark" />
+			</div>
+		</div>
+	
+		<div class="my-4 row">
+			<div class="col-7">
+				<InputComponent Model="@_inputComponents.FirstOrDefault(ic => ic.Name == Constants.Email)" BackgroundColor="bg-dark" />
+			</div>
+			
+			<div class="col">
+				<InputComponent Model="@_inputComponents.FirstOrDefault(ic => ic.Name == Constants.Phone)" BackgroundColor="bg-dark" />
+			</div>
+		</div>
+
+		<div class="my-4">
+			<InputComponent Model="@_inputComponents.FirstOrDefault(ic => ic.Name == Constants.Subject)" BackgroundColor="bg-dark" />
+		</div>
+
+		<div class="">
+			<InputComponent Model="@_inputComponents.FirstOrDefault(ic => ic.Name == Constants.Message)" BackgroundColor="bg-dark" />
+		</div>
+	</div>
+
+	<div class="modal-footer d-flex justify-content-around">
+		<button type="button" class="btn excelence send" @onclick="sendEmail">Send</button>
+
+		<button type="button" class="btn text-danger cancel" @onclick="@(() => CloseCallback.InvokeAsync())">Cancel</button>
+	</div>
+</div>
+
+@code{
+	[Parameter]
+	public EventCallback CloseCallback { get; set; }
+
+	private IEnumerable<Models.Input> _inputComponents;
+
+	protected override void OnInitialized()
+	{
+		_inputComponents = new List<Models.Input>
+		{
+			new Models.Input
+			{
+				Name = Constants.Name,
+				Required = true,
+				InlineLabel = true,
+				InputType = InputType.Text,
+				MinLength = 5,
+				MaxLength = 150
+			},
+			new Models.Input
+			{
+				Name = Constants.Email,
+				Required = true,
+				InlineLabel = true,
+				InputType = InputType.Email,
+				MinLength = 5
+			},
+			new Models.Input
+			{
+				Name = Constants.Phone,
+				InlineLabel = true,
+				InputType = InputType.Phone,
+				MaxLength = 14
+			},
+			new Models.Input
+			{
+				Name = Constants.Subject,
+				Required = true,
+				InlineLabel = true,
+				InputType = InputType.Text,
+				MinLength = 1,
+				MaxLength = 250
+			},
+			new Models.Input
+			{
+				Name = Constants.Message,
+				Required = true,
+				InlineLabel = true,
+				InputType = InputType.TextArea,
+				MinLength = 50
+			}
+		};
+	}
+
+	private async Task sendEmail()
+	{
+		var email = new MimeMessage();
+		var fromName = _inputComponents.FirstOrDefault(ic => ic.Name == Constants.Name).Value;
+		var fromEmail = _inputComponents.FirstOrDefault(ic => ic.Name == Constants.Email).Value;
+		var message = _inputComponents.FirstOrDefault(ic => ic.Name == Constants.Message).Value;
+		var phone = _inputComponents.FirstOrDefault(ic => ic.Name == Constants.Phone).Value;
+
+		email.From.Add(new MailboxAddress(fromName, fromEmail));
+		email.To.Add(new MailboxAddress("Third Coast Software", "robbyt15@gmail.com"));
+		email.Subject = _inputComponents.FirstOrDefault(ic => ic.Name == Constants.Subject).Value;
+		email.Body = new TextPart(MimeKit.Text.TextFormat.Text)
+		{
+			Text = $"{message}{Environment.NewLine}{phone}"
+		};
+
+		try
+		{
+			using(var smtp = new SmtpClient())
+			{
+				smtp.Connect("smtp.gmail.com", 587, false);
+
+				//smtp.Authenticate("smtp_username", "smtp_password");
+
+				//smtp.Send(email);
+
+				smtp.Disconnect(true);
+			}
+		}
+		catch(Exception ex)
+		{
+			throw;
+		}
+	}
+}

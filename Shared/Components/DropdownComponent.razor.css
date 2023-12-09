@@ -1,0 +1,23 @@
+﻿.dropdown {
+	position: absolute;
+	top: 3.5rem;
+	z-index: 5000;
+	box-shadow: 0px 0px 5px -1px #dfdad5;
+}
+
+.right{
+	right: 0;
+}
+
+.center {
+	left: 35%;
+	right: 35%;
+	box-shadow: 0 0 6px 0 #dfdad5;
+}
+
+@media (max-width: 300px) {
+	.dropdown {
+		left: 0;
+		right: 0;
+	}
+}
